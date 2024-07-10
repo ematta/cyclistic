@@ -7,24 +7,23 @@ import zipfile
 from pathlib import Path
 from tqdm import tqdm
 
-CONFIG = {
-    "download_url": "https://divvy-tripdata.s3.amazonaws.com/",
-    "download_files": [
-        "202307-divvy-tripdata.zip",
-        "202308-divvy-tripdata.zip",
-        "202309-divvy-tripdata.zip",
-        "202310-divvy-tripdata.zip",
-        "202311-divvy-tripdata.zip",
-        "202312-divvy-tripdata.zip",
-        "202401-divvy-tripdata.zip",
-        "202402-divvy-tripdata.zip",
-        "202403-divvy-tripdata.zip",
-        "202404-divvy-tripdata.zip",
-        "202405-divvy-tripdata.zip",
-        "202406-divvy-tripdata.zip"
-    ],
-    "working_directory": "data/"
-}
+download_url = "https://divvy-tripdata.s3.amazonaws.com/"
+download_files = [
+    "202307-divvy-tripdata.zip",
+    "202308-divvy-tripdata.zip",
+    "202309-divvy-tripdata.zip",
+    "202310-divvy-tripdata.zip",
+    "202311-divvy-tripdata.zip",
+    "202312-divvy-tripdata.zip",
+    "202401-divvy-tripdata.zip",
+    "202402-divvy-tripdata.zip",
+    "202403-divvy-tripdata.zip",
+    "202404-divvy-tripdata.zip",
+    "202405-divvy-tripdata.zip",
+    "202406-divvy-tripdata.zip"
+]
+working_directory = "data/"
+db_url = "cyclistic.db"
 
 
 def unzip(filename):
@@ -63,19 +62,18 @@ def download_zip(url, filename):
 
 
 if __name__ == "__main__":
-    url = str(CONFIG["download_url"])
-    files = CONFIG["download_files"]
-    # Replace with the directory you want to save the files to
-    working_directory = str(CONFIG["working_directory"])
     # Delete directory if it already exists
     if os.path.exists(working_directory):
         shutil.rmtree(working_directory)
-    conn = sqlite3.connect("cyclistic.db")
+    # If file exists delete it
+    if os.path.exists("cyclistic.db"):
+        os.remove(db_url)
+    conn = sqlite3.connect(db_url)
     # Create the working directory if it doesn't exist
     Path(working_directory).mkdir(parents=True, exist_ok=True)
     # Download the files
-    for file in files:
-        download_zip(url + file, working_directory + file)
+    for file in download_files:
+        download_zip(download_url + file, working_directory + file)
         unzip(working_directory + file)
         os.remove(working_directory + file)
         pd.read_csv(
