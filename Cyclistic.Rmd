@@ -1,0 +1,26 @@
+---
+title: "Cyclistic Analysis for Google Certification"
+author: "Enrique Matta-Rodriguez"
+output: pdf
+---
+
+# Cyclistic
+
+## Business Task
+
+### Setup
+
+```{r install}
+install.packages("tidyverse")
+
+```
+
+## Data Sources
+
+### Cleaning
+
+## Analysis
+
+### Visualizations
+
+## Recommendations
