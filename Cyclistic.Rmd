@@ -12,6 +12,7 @@ output: pdf
 
 ```{r install}
 install.packages("tidyverse")
+install.packages("RSQLite")
 ```
 
 ## Data Sources
@@ -19,7 +20,16 @@ install.packages("tidyverse")
 Our datasources can be found [here](https://divvy-tripdata.s3.amazonaws.com/index.html). To download them, execute the following python script in the `etl` folder. Run `pip install -r requirements.txt` then run `python downloader.py` to download all the files.
 
 ```{bash, engine.opts='-l'}
-make
+make downloads
+```
+
+Once downloaded, we will load our resulting database to our R sheet. Let's connect.
+
+```{r database}
+library(DBI)
+con <- dbConnect(RSQLite::SQLite(), "cyclistic.db")
+df <- dbGetQuery(con, "SELECT * FROM cyclistic")
+dbDisconnect(con)
 ```
 
 ### Cleaning

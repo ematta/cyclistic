@@ -23,7 +23,7 @@ CONFIG = {
         "202405-divvy-tripdata.zip",
         "202406-divvy-tripdata.zip"
     ],
-    "working_directory": "../data/"
+    "working_directory": "data/"
 }
 
 
@@ -63,7 +63,6 @@ def download_zip(url, filename):
 
 
 if __name__ == "__main__":
-    conn = sqlite3.connect("../data/cyclistic-analysis.db")
     url = str(CONFIG["download_url"])
     files = CONFIG["download_files"]
     # Replace with the directory you want to save the files to
@@ -71,6 +70,7 @@ if __name__ == "__main__":
     # Delete directory if it already exists
     if os.path.exists(working_directory):
         shutil.rmtree(working_directory)
+    conn = sqlite3.connect("cyclistic.db")
     # Create the working directory if it doesn't exist
     Path(working_directory).mkdir(parents=True, exist_ok=True)
     # Download the files
