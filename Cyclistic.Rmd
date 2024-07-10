@@ -8,14 +8,19 @@ output: pdf
 
 ## Business Task
 
-### Setup
+### Setup of Environment
 
 ```{r install}
 install.packages("tidyverse")
-
 ```
 
 ## Data Sources
+
+Our datasources can be found [here](https://divvy-tripdata.s3.amazonaws.com/index.html). To download them, execute the following python script in the `etl` folder. Run `pip install -r requirements.txt` then run `python downloader.py` to download all the files.
+
+```{bash, engine.opts='-l'}
+make
+```
 
 ### Cleaning
 
